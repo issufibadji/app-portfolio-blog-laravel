@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\(\\\\.php|\\\\.json|\\\\.blade\\\\.php|\\\\.js|\\\\.scss\\)$\")",
+      "Bash(ls:*)",
+      "Bash(composer show:*)",
+      "Bash(find c:DevDevWebapp-portfolio-blog-laravel -type f -name *.md)"
+    ]
+  }
+}
