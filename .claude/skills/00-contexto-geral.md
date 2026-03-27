@@ -3,57 +3,52 @@
 Este documento descreve o propósito, a arquitetura, o stack tecnológico e as regras de desenvolvimento do projeto. É o ponto de entrada obrigatório para qualquer engenheiro que vá contribuir com o sistema. Todas as decisões arquiteturais relevantes estão registradas aqui.
 
 ---
-## Regra de Organização da Aplicação
 
-A aplicação é dividida em duas camadas principais:
-
-### Core
-Responsável por tudo que é global, compartilhado e estrutural para o funcionamento do sistema, incluindo:
-- layout base
-- navegação global
-- autenticação
-- usuários
-- permissões
-- componentes reutilizáveis
-- regras transversais
-
-### Módulos
-Responsáveis por funcionalidades de negócio específicas, carregadas conforme necessidade do domínio.  
-Cada módulo deve conter apenas:
-- regras de negócio próprias
-- interface específica
-- rotas próprias
-- componentes Livewire próprios
-- integrações específicas
-
-Módulos não devem recriar elementos globais da aplicação.
-Eles devem consumir a base fornecida pelo Core.
 ## Propósito do Projeto
 
-Este sistema é uma **reconstrução greenfield** de um SaaS para gestão de negócios. O objetivo é construir um produto limpo, modular e sustentável — preservando as regras de negócio essenciais, mas sem carregar débito técnico de versões anteriores.
+Este sistema é um **portfólio pessoal com blog integrado**, construído como CMS completo com painel administrativo. O objetivo é apresentar trabalhos, habilidades, experiência profissional e publicar artigos, tudo gerenciado por um admin protegido por autenticação.
 
-O sistema **não é uma migração** de código legado. Todo o código é novo. A única herança é o conhecimento de domínio (o que o negócio precisa fazer).
+O sistema **não é modular**. É um **MVC monolítico tradicional Laravel** com separação clara entre área pública (frontend) e painel administrativo (backend).
 
 ---
 
 ## Arquitetura
 
-O sistema é um **monólito modular** baseado em `nwidart/laravel-modules`. A estrutura é:
+O sistema segue o padrão **MVC monolítico** padrão do Laravel:
 
 ```
-modularAppLavralLivewire/
-├── app/                        ← Shell mínimo (base classes, User model)
-├── Modules/
-│   ├── Core/                   ← Infraestrutura transversal
-│   ├── AgendaAi/               ← [planejado] Domínio de agendamentos
-│   ├── MercadoPago/            ← [planejado] Domínio de pagamentos
-│   └── Report/                 ← [planejado] Domínio de relatórios
-├── resources/                  ← Assets globais (app.css, app.js)
-├── routes/                     ← Rotas raiz (web.php, api.php)
-└── config/                     ← Configurações Laravel
+app-portfolio-blog-laravel/
+├── app/
+│   ├── DataTables/             ← Classes Yajra DataTables (Blog)
+│   ├── helper/                 ← Funções globais (upload, delete, cor, sidebar)
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/          ← 26 controllers do painel admin
+│   │   │   ├── Auth/           ← Controllers de autenticação (Breeze)
+│   │   │   └── Frontend/       ← HomeController (site público)
+│   │   ├── Middleware/
+│   │   └── Requests/
+│   ├── Mail/                   ← ContactMail (formulário de contato)
+│   ├── Models/                 ← 24 models Eloquent
+│   └── Providers/
+├── database/
+│   ├── migrations/             ← 28 migrations
+│   └── seeders/
+├── resources/
+│   └── views/
+│       ├── admin/              ← Views do painel administrativo
+│       ├── auth/               ← Views de autenticação (Breeze)
+│       ├── frontend/           ← Views do site público
+│       ├── layouts/            ← Layouts base
+│       └── mail/               ← Templates de e-mail
+├── routes/
+│   ├── web.php                 ← Rotas públicas + admin
+│   ├── auth.php                ← Rotas de autenticação (Breeze)
+│   └── api.php                 ← API mínima (Sanctum)
+└── public/
+    ├── assets/                 ← CSS, JS, fontes, imagens estáticas
+    └── uploads/                ← Arquivos enviados pelo admin
 ```
-
-Cada módulo é um **domínio isolado**: tem seus próprios models, migrations, rotas, Livewire components, services e testes. Módulos se comunicam **exclusivamente via Events** — nunca importando models de outro módulo diretamente.
 
 ---
 
@@ -61,113 +56,84 @@ Cada módulo é um **domínio isolado**: tem seus próprios models, migrations, 
 
 | Tecnologia | Versão | Papel |
 |---|---|---|
-| PHP | ^8.2 | Runtime |
-| Laravel | 12.x | Framework base |
-| Livewire | ^4.2 | UI reativa server-side |
-| Tailwind CSS | v4 (via Vite plugin) | Estilização utility-first |
-| Alpine.js | (bundled com Livewire) | Interatividade client-side |
-| nwidart/laravel-modules | ^12.0 | Estrutura modular |
-| spatie/laravel-permission | ^6.25 | RBAC |
-| laravel/pint | latest | Qualidade de código (PSR-12) |
-| Vite | latest | Asset bundler |
-| MySQL | 8+ | Banco de dados |
-| Node.js | 20+ | Build toolchain |
+| PHP | ^8.1 | Runtime |
+| Laravel | ^10.10 | Framework base |
+| Laravel Breeze | ^1.21 | Scaffolding de autenticação |
+| Laravel Sanctum | ^3.2 | Autenticação de API |
+| Yajra DataTables | ^10.0 | Tabelas server-side no admin |
+| Yoeunes Toastr | ^2.3 | Notificações toast |
+| Tailwind CSS | ^3.1.0 | Estilização utility-first |
+| Alpine.js | ^3.4.2 | Interatividade client-side |
+| Vite | ^4.0.0 | Asset bundler |
+| MySQL | 8.0+ | Banco de dados |
+| Node.js | 18+ | Build toolchain |
 
 ---
 
-## Princípios de Design
+## Camadas da Aplicação
 
-### 1. Independência de módulos
-Cada módulo deve ser capaz de existir, ser testado e ser removido sem quebrar os outros. Dependências entre módulos são proibidas a nível de código — use Events.
+### Frontend Público (`/`)
+Área acessível a qualquer visitante. Gerenciada por `HomeController`. Exibe portfólio, blog, serviços, habilidades, experiência, depoimentos e formulário de contato.
 
-### 2. Camada de serviço
-Lógica de negócio vive em **Service classes** (`Modules/Name/app/Services/`). Controllers e Livewire components são finos — delegam ao serviço e renderizam.
+### Painel Administrativo (`/admin/`)
+Área protegida por autenticação Laravel Breeze (`auth`, `verified`). Possui 26 controllers CRUD para gerenciar todo o conteúdo do site.
 
-### 3. Action pattern
-Operações atômicas e reutilizáveis vivem em **Action classes** (`Modules/Name/app/Actions/`). Uma action faz uma coisa só. Pode ser chamada de Services, Livewire, ou jobs.
+### Autenticação
+Baseada em Laravel Breeze. Rotas definidas em `routes/auth.php`. Apenas um usuário administrador acessa o painel.
 
-### 4. Event-driven entre módulos
-A única forma de um módulo reagir a algo que aconteceu em outro módulo é via Events do Laravel. Dispatche um evento no módulo origem; registre um Listener no módulo destino.
+---
 
-### 5. Sem acesso direto a models de outro módulo
-`Modules\AgendaAi\Models\Appointment` nunca deve ser importado dentro de `Modules\Report\`. Se Report precisa de dados de AgendaAi, AgendaAi expõe um Service ou dispara um Event com os dados necessários.
+## Princípios de Desenvolvimento
+
+### 1. Controllers são finos
+Controllers recebem a requisição, validam via `$request->validate()`, interagem com o Model e retornam view ou redirect. Sem lógica de negócio complexa.
+
+### 2. Upload centralizado em helper
+Toda lógica de upload de arquivo usa `handleUpload()` em `app/helper/helpers.php`. Nunca duplicar lógica de upload nos controllers.
+
+### 3. Configurações via Models singleton
+Configurações como `GeneralSetting`, `SeoSetting`, `FooterInfo` são registros únicos no banco — o admin edita o único registro existente, nunca cria novos.
+
+### 4. Seções com configuração própria
+Cada seção do site (Portfolio, Skill, Feedback, Blog, Contact) tem um Model `*SectionSetting` com título e subtítulo editáveis.
 
 ---
 
 ## Regras de Desenvolvimento
 
-### PSR-4 e Namespaces
-- Namespace raiz de cada módulo: `Modules\Name\`
-- Mapeado para: `Modules/Name/app/`
-- Exemplo: `Modules\Core\Livewire\Dashboard` → `Modules/Core/app/Livewire/Dashboard.php`
-- Nunca use `Modules\Name\Http\Livewire\` — Livewire fica diretamente em `Modules\Name\Livewire\`
-
 ### Convenções de nomenclatura
 
 | Tipo | Convenção | Exemplo |
 |---|---|---|
-| Model | PascalCase singular | `Appointment.php` |
-| Service | `NomeService` | `AppointmentService.php` |
-| Action | `VerbNomeAction` | `CreateAppointmentAction.php` |
-| Repository | `NomeRepository` (interface) + `EloquentNomeRepository` (impl) | |
-| Livewire Component | PascalCase | `AppointmentList.php` |
-| Form Request | `VerbNomeRequest` | `CreateAppointmentRequest.php` |
-| Event | Passado do evento | `AppointmentCreated.php` |
-| Listener | `OnNomeDoEvento` | `OnAppointmentCreated.php` |
-| Migration | snake_case descritiva | `create_appointments_table.php` |
+| Model | PascalCase singular | `BlogCategory.php` |
+| Controller admin | `NomeController` em `Admin/` | `BlogController.php` |
+| Controller frontend | `NomeController` em `Frontend/` | `HomeController.php` |
+| View admin | `resources/views/admin/nome/` | `admin/blog/index.blade.php` |
+| View frontend | `resources/views/frontend/` | `frontend/home.blade.php` |
+| Migration | snake_case descritiva | `create_blogs_table.php` |
+| Upload | `public/uploads/` | `public/uploads/blog/imagem.jpg` |
 
-### Onde cada tipo de código vai
+### Rotas admin
 
-| Tipo | Localização |
-|---|---|
-| Eloquent Models | `Modules/Name/app/Models/` |
-| Livewire Components | `Modules/Name/app/Livewire/` |
-| Views Livewire | `Modules/Name/resources/views/livewire/` |
-| Blade Components | `Modules/Name/resources/views/components/` |
-| Services | `Modules/Name/app/Services/` |
-| Actions | `Modules/Name/app/Actions/` |
-| Repositories | `Modules/Name/app/Repositories/` |
-| HTTP Controllers | `Modules/Name/app/Http/Controllers/` |
-| Form Requests | `Modules/Name/app/Http/Requests/` |
-| Migrations | `Modules/Name/database/migrations/` |
-| Seeders | `Modules/Name/database/seeders/` |
-| Factories | `Modules/Name/database/factories/` |
-| Rotas web | `Modules/Name/routes/web.php` |
-| Rotas api | `Modules/Name/routes/api.php` |
-| Testes | `Modules/Name/tests/Feature/` e `Unit/` |
-| Configurações do módulo | `Modules/Name/config/` |
+Todas as rotas admin seguem o padrão:
+- Prefixo: `/admin/`
+- Middleware: `['auth', 'verified']`
+- Name prefix: `admin.`
 
-### Matriz de decisão: Livewire vs Blade vs Alpine
-
-| Situação | Solução |
-|---|---|
-| Formulário com validação server-side | Livewire Component |
-| Lista com filtros e paginação | Livewire Component |
-| Modal com estado no servidor | Livewire Component |
-| Botão reutilizável sem lógica | Blade Component (`x-core::button`) |
-| Card/Badge sem lógica | Blade Component |
-| Dropdown puro CSS/JS | Alpine.js |
-| Tabs sem dados do servidor | Alpine.js |
-| Toggle/Accordion local | Alpine.js |
-| Partial de layout (header, footer) | `@include` ou Blade Component |
-
----
-
-## Limites de Módulos
-
-### Core (`Modules/Core/`)
-Infraestrutura transversal do sistema. Fornece autenticação, RBAC, layouts, sidebar, logging, e componentes UI compartilhados. **Não contém lógica de negócio.**
-
-### Domínios (`Modules/AgendaAi/`, `Modules/MercadoPago/`, `Modules/Report/`)
-Cada módulo encapsula completamente um domínio de negócio: models, migrations, services, rotas, views e testes. **Dependem do Core, mas nunca uns dos outros diretamente.**
+```php
+Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(function () {
+    Route::resource('blog', BlogController::class);
+});
+// Rota acessível como: route('admin.blog.index')
+```
 
 ---
 
 ## O que este sistema NÃO é
 
-- **Não é uma migração** de sistema legado — é uma reconstrução greenfield
-- **Não é um MVC monolítico tradicional** — lógica de negócio não vive em Controllers
-- **Não tem God Classes** — Services e Actions têm responsabilidade única
-- **Não tem acoplamento entre domínios** — sem `use Modules\AgendaAi\...` dentro de `Modules\Report\`
-- **Não tem CSS customizado desnecessário** — Tailwind v4 cobre spacing, cores e tipografia
-- **Não tem lógica de negócio em Views ou Livewire Components** — eles delegam para Services/Actions
+- **Não é modular** — sem `nwidart/laravel-modules`; todo código está em `app/`
+- **Não tem multi-usuário** — um único admin gerencia todo o conteúdo
+- **Não tem API pública** — `api.php` é mínimo, apenas com rota de usuário autenticado
+- **Não tem Livewire** — UI reativa é feita com Alpine.js + DataTables
+- **Não tem RBAC** — sem roles/permissions; o único acesso restrito é `auth + verified`
+- **Não tem soft deletes generalizados** — apenas `Hero` usa `SoftDeletes`
