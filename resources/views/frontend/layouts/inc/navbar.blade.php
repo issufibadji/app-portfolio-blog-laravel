@@ -21,6 +21,21 @@
           <a class="nav-link" href="{{route('blog')}}">Blog</a>
         </li>
       </ul>
+
+      {{-- Theme Toggle Button --}}
+      <div class="theme-toggle-wrap">
+        <button
+          id="theme-toggle-btn"
+          class="theme-toggle-btn"
+          aria-label="Mudar para tema claro"
+          aria-pressed="false"
+          title="Ativar tema claro"
+        >
+          <span class="theme-icon theme-icon--sun" aria-hidden="true">☀️</span>
+          <span class="theme-icon theme-icon--moon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+
     </div>
   </div>
 </nav>

@@ -1,0 +1,930 @@
+/*
+ * dark-theme-override.css
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Sistema de dual-theme (dark padrão + light toggle).
+ * Inclua DEPOIS de theme.css. O JS aplica data-theme="light" no <html>.
+ *
+ * Design tokens:
+ *   Dark  → :root (default)
+ *   Light → html[data-theme="light"]
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/* ─── DARK THEME — Design Tokens (padrão) ───────────────────────────────── */
+:root {
+  --bg-deep      : #080008;
+  --bg-card      : #120008;
+  --bg-card-2    : #0e0008;
+  --accent       : #c0143c;
+  --accent-hover : #e0195a;
+  --accent-rgb   : 192, 20, 60;
+  --text-main    : #ffffff;
+  --text-muted   : #888888;
+  --border       : #2a0012;
+  --nav-bg       : rgba(10, 0, 5, 0.85);
+  --nav-text     : #e8e8e8;
+  --input-bg     : #120008;
+  --shadow       : rgba(0, 0, 0, 0.6);
+  --body-gradient: radial-gradient(ellipse at bottom right, #1a0008 0%, #0a0a0a 60%);
+}
+
+/* ─── LIGHT THEME — Overrides via data-theme="light" ────────────────────── */
+html[data-theme="light"] {
+  --bg-deep      : #f5f5f5;
+  --bg-card      : #ffffff;
+  --bg-card-2    : #f0f0f0;
+  --accent       : #c0143c;    /* mantém o carmim escuro também no light */
+  --accent-hover : #e0195a;
+  --accent-rgb   : 192, 20, 60;
+  --text-main    : #111111;
+  --text-muted   : #555555;
+  --border       : #e0e0e0;
+  --nav-bg       : #ffffff;
+  --nav-text     : #222222;
+  --input-bg     : #ffffff;
+  --shadow       : rgba(0, 0, 0, 0.12);
+  --body-gradient: linear-gradient(135deg, #f5f5f5 0%, #faf0f3 35%, #f8f5f6 65%, #f5f5f5 100%);
+}
+
+/* ─── Transição global suave entre temas ─────────────────────────────────── */
+*,
+*::before,
+*::after {
+  transition:
+    background-color 0.35s ease,
+    color            0.35s ease,
+    border-color     0.35s ease,
+    box-shadow       0.35s ease,
+    fill             0.35s ease !important;
+}
+
+/* ─── Reset Global: fundo e texto ────────────────────────────────────────── */
+html,
+body {
+  background-color: #0a0a0a !important;
+  background-image: radial-gradient(ellipse at bottom right, #1a0008 0%, #0a0a0a 60%) !important;
+  background-attachment: fixed !important;
+  color: #cccccc !important;
+}
+
+/* Headings globais */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main) !important;
+}
+
+/* Parágrafos e texto geral */
+p, span, li, td, th, label {
+  color: #cccccc;
+}
+
+a {
+  color: #dddddd;
+}
+
+/* ─── Preloader ──────────────────────────────────────────────────────────── */
+.preloader {
+  background-color: var(--bg-deep) !important;
+}
+
+/* ─── Navegação ──────────────────────────────────────────────────────────── */
+/* Nav hover / active: laranja → carmim */
+.main_menu .navbar-nav li .active,
+.main_menu .navbar-nav li:hover > a {
+  color: var(--accent) !important;
+}
+
+.main_menu .menu_icon li a:hover {
+  color: var(--accent) !important;
+}
+
+/* Navbar padrão: semi-transparente com blur */
+.main_menu {
+  background: rgba(10, 0, 5, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+/* Nav fixa (scroll): mesma base, mais opaca */
+.main_menu.menu_fix {
+  background: rgba(10, 0, 5, 0.97) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: var(--border) !important;
+}
+
+.main_menu.menu_fix .navbar-nav li a,
+.menu_fix .navbar-nav li a {
+  color: #e8e8e8 !important;
+}
+
+.main_menu.menu_fix .menu_icon li a,
+.menu_fix .menu_icon li a {
+  color: #e8e8e8 !important;
+}
+
+/* Submenu dropdown */
+.main_menu .sub_menu {
+  background: var(--bg-card) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.main_menu .sub_menu > li > a {
+  color: #e8e8e8 !important;
+}
+
+/* ─── Botões ─────────────────────────────────────────────────────────────── */
+/* Botão primário (carmim escuro → hover mais vivo) */
+.button-orange,
+.button-primary {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #ffffff !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease !important;
+}
+
+.button-primary:hover {
+  background-color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+  color: #ffffff !important;
+}
+
+.button-orange:hover {
+  background-color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+  color: #ffffff !important;
+}
+
+/* Botão outline (borda carmim) */
+.load-more,
+.button-primary-trans {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.load-more:hover,
+.button-primary-trans:hover {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+/* Botão dark (navy → preto) */
+.button-dark {
+  background-color: var(--bg-deep) !important;
+  color: #ffffff !important;
+}
+
+.button-dark:hover {
+  color: var(--accent) !important;
+}
+
+/* Hover ripple de mouse-dir: fundo branco nos botões claros */
+.button-primary.mouse-dir .dir-part,
+.button-dark.mouse-dir .dir-part {
+  background-color: rgba(224, 25, 90, 0.15) !important;
+}
+
+/* Ripple accent nos botões accent */
+.button-orange .dir-part {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Hover ripple geral (cor de destaque → carmim) */
+.mouse-dir .dir-part {
+  background: var(--accent) !important;
+}
+
+/* CTA hero: fundo accent */
+.header-text a.button-dark.mouse-dir {
+  background: var(--accent) !important;
+  border: none !important;
+}
+
+/* ─── Seção Hero / Header ────────────────────────────────────────────────── */
+.header-area {
+  background-color: var(--bg-deep) !important;
+}
+
+.slide-inner:after,
+.site-header:after,
+.header-area:after {
+  background-color: #000 !important;
+  opacity: 0.72 !important;
+}
+
+.header-text .typer-title {
+  color: #f0f0f0 !important;
+}
+
+.header-text .title {
+  color: var(--text-main) !important;
+}
+
+.header-text .desc {
+  color: #d0d0d0 !important;
+}
+
+/* ─── Seções Genéricas (fundo branco implícito → escuro) ────────────────── */
+/* As seções do portfólio não têm classe específica de bg,
+   então zeramos o fundo da page */
+.section-title .title {
+  color: var(--text-main) !important;
+}
+
+.section-title .desc {
+  color: var(--text-muted) !important;
+}
+
+/* ─── Services ───────────────────────────────────────────────────────────── */
+.single-service {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.single-service .title {
+  color: var(--text-main) !important;
+}
+
+.single-service .title:before {
+  background: var(--accent) !important;
+}
+
+.single-service p,
+.single-service span {
+  color: var(--text-muted) !important;
+}
+
+/* ─── About ──────────────────────────────────────────────────────────────── */
+.about-image {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.about-text .title {
+  color: var(--text-main) !important;
+}
+
+.about-text .sub-title {
+  color: var(--accent) !important;
+}
+
+.about-text .desc {
+  color: #cccccc !important;
+}
+
+/* ─── Portfolio ──────────────────────────────────────────────────────────── */
+/* Filter menu: borda/texto laranja → carmim */
+.filter-menu li {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.filter-menu li:hover,
+.filter-menu li.active {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* Overlay no hover do portfolio: laranja → carmim */
+.single-portfolio .portfolio-content:before {
+  background-color: var(--accent) !important;
+  opacity: 0.85 !important;
+}
+
+.single-portfolio .portfolio-content .title {
+  color: var(--text-main) !important;
+}
+
+.single-portfolio .portfolio-content .desc {
+  color: #f0f0f0 !important;
+}
+
+/* Blockquote */
+blockquote {
+  border-left-color: var(--accent) !important;
+  background-color: var(--bg-card-2) !important;
+  color: #cccccc !important;
+}
+
+/* ─── Skills ─────────────────────────────────────────────────────────────── */
+/* Track da barra: cinza claro → borda escura */
+.bar_group__bar.thick:before {
+  background: var(--border) !important;
+}
+
+/* Barra de progresso: gradiente carmim escuro → vivo */
+.bar_group__bar.thick,
+.bar_group .elastic {
+  background: linear-gradient(90deg, #c0143c 0%, #e0195a 100%) !important;
+  box-shadow: 0 0 8px rgba(192, 20, 60, 0.45) !important;
+}
+
+/* Labels e texto das skills */
+.b_label,
+.bar_label_min,
+.bar_label_max,
+.b_tooltip span {
+  color: var(--text-main) !important;
+}
+
+.bar_group .title {
+  color: #e0e0e0 !important;
+}
+
+.bar_group .sub-title {
+  color: var(--text-muted) !important;
+}
+
+/* ─── Experience ─────────────────────────────────────────────────────────── */
+.experience-text .title {
+  color: var(--text-main) !important;
+}
+
+.experience-text .desc {
+  color: #cccccc !important;
+}
+
+/* Ícones de experiência: laranja → carmim */
+.icon-info .icon {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.icon-info h6 {
+  color: #e0e0e0 !important;
+}
+
+.icon-info h6 a {
+  color: #e0e0e0 !important;
+}
+
+.icon-info h6 a:hover {
+  color: var(--accent) !important;
+}
+
+/* ─── Testimonials / Feedback ────────────────────────────────────────────── */
+.testimonial-slider .single-testimonial {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.testimonial-slider .single-testimonial .quote {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.testimonial-slider .single-testimonial .title {
+  color: var(--text-main) !important;
+}
+
+.testimonial-slider .single-testimonial .position {
+  color: var(--text-muted) !important;
+}
+
+.testimonial-slider .single-testimonial .content p {
+  color: #cccccc !important;
+}
+
+/* Slick dots */
+.slick-dots li button {
+  background-color: var(--accent) !important;
+}
+
+/* ─── Blog ───────────────────────────────────────────────────────────────── */
+.single-blog,
+.blog-slider .single-blog {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.single-blog .title a {
+  color: var(--text-main) !important;
+}
+
+.single-blog .title a:hover {
+  color: var(--accent) !important;
+}
+
+.single-blog .desc {
+  color: var(--text-muted) !important;
+}
+
+/* Blog meta box */
+.blog-meta {
+  background-color: var(--bg-card-2) !important;
+  border-color: var(--border) !important;
+}
+
+.blog-meta .single-meta .meta-title {
+  color: var(--text-muted) !important;
+}
+
+.blog-meta .single-meta .meta-value,
+.blog-meta .single-meta .meta-value a {
+  color: #e0e0e0 !important;
+}
+
+/* ─── Contact / Inputs ───────────────────────────────────────────────────── */
+.input-box {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: #e8e8e8 !important;
+}
+
+.input-box:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15) !important;
+}
+
+.contact-form ::-webkit-input-placeholder { color: var(--text-muted) !important; }
+.contact-form ::-moz-placeholder          { color: var(--text-muted) !important; }
+.contact-form :-ms-input-placeholder      { color: var(--text-muted) !important; }
+.contact-form :-moz-placeholder           { color: var(--text-muted) !important; }
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
+.footer-area {
+  background-color: #0a0005 !important;
+  background-image: radial-gradient(ellipse at top right, #1a0008 0%, #0a0005 70%) !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.footer-widgets {
+  color: #cccccc !important;
+}
+
+.footer-widgets a {
+  color: #cccccc !important;
+}
+
+.footer-widgets a:hover {
+  color: var(--accent) !important;
+}
+
+.footer-widgets .widget-title {
+  color: var(--text-main) !important;
+}
+
+/* Social links do footer */
+.footer-widgets .text-box ul li a {
+  background: rgba(192, 20, 60, 0.12) !important;
+}
+
+.footer-widgets .text-box ul li a:hover {
+  background: var(--accent) !important;
+}
+
+/* Footer bottom bar: carmim escuro #c0143c sem brilho excessivo */
+.footer-bottom {
+  background-color: #c0143c !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Copyright span navy → branco */
+.copyright p span {
+  color: #ffffff !important;
+}
+
+/* ─── ScrollUp Button ────────────────────────────────────────────────────── */
+#scrollUp {
+  background-color: var(--bg-card) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+#scrollUp:hover {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+/* ─── Pagination ─────────────────────────────────────────────────────────── */
+.pagination .page-numbers {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.pagination .page-numbers:after {
+  background-color: var(--bg-card) !important;
+}
+
+.pagination .page-numbers.current:after,
+.pagination .page-numbers:hover:after {
+  opacity: 0 !important;
+}
+
+/* ─── Site Header (páginas internas) ─────────────────────────────────────── */
+.site-header .title {
+  color: var(--text-main) !important;
+}
+
+.site-header .breadcrumbs ul li {
+  color: #dddddd !important;
+}
+
+.site-header .breadcrumbs ul li a {
+  color: #dddddd !important;
+}
+
+/* ─── Portfolio Details ───────────────────────────────────────────────────── */
+.portfolio-details .portflio-info {
+  background-color: var(--bg-card-2) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.portfolio-details .portflio-info .single-info .title {
+  color: var(--text-muted) !important;
+}
+
+.portfolio-details .portflio-info .single-info p,
+.portfolio-details .portflio-info .single-info span {
+  color: #e0e0e0 !important;
+}
+
+.description .dots-list li:before {
+  color: var(--accent) !important;
+}
+
+/* Navigation entre projetos */
+.single-navigation {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.single-navigation .nav-link .icon {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+}
+
+.single-navigation .nav-link .text {
+  color: #e0e0e0 !important;
+}
+
+/* Quote box (detalhes) */
+.quote-box {
+  background-color: var(--bg-card-2) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.quote-content .title {
+  color: var(--text-main) !important;
+}
+
+.quote-content .desc {
+  color: var(--text-muted) !important;
+}
+
+/* ─── Blog Details ───────────────────────────────────────────────────────── */
+.blog-details .head-title,
+.portfolio-details .head-title {
+  color: var(--text-main) !important;
+}
+
+/* ─── Misc overrides ─────────────────────────────────────────────────────── */
+/* Bordas globais residuais */
+hr, .border, [class*="border-"] {
+  border-color: var(--border) !important;
+}
+
+/* Seções alternadas para dar ritmo visual */
+.services-area,
+.portfolio-area,
+.skills-area,
+.blog-area {
+  background-color: var(--bg-deep) !important;
+}
+
+.about-area,
+.experience-area,
+.feedback-area,
+.contact-area {
+  background-color: var(--bg-card) !important;
+}
+
+/* Skills area: imagem borda */
+.skills-area .single-image img {
+  border-color: var(--border) !important;
+}
+
+/* Experience area: imagem borda */
+.experience-area .single-image img {
+  border-color: var(--border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT THEME — Overrides para cores hardcoded no dark theme
+   (as CSS vars já mudam automaticamente; aqui corrigimos valores fixos)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Body e fundo global */
+html[data-theme="light"] body {
+  background-color: var(--bg-deep) !important;
+  background-image: var(--body-gradient) !important;
+  color: var(--text-main) !important;
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6 {
+  color: var(--text-main) !important;
+}
+
+html[data-theme="light"] p,
+html[data-theme="light"] span:not(.theme-icon),
+html[data-theme="light"] li,
+html[data-theme="light"] td,
+html[data-theme="light"] th,
+html[data-theme="light"] label {
+  color: var(--text-muted) !important;
+}
+
+/* Navbar em light mode — claro com blur */
+html[data-theme="light"] .main_menu {
+  background: rgba(245, 245, 245, 0.88) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+html[data-theme="light"] .main_menu.menu_fix {
+  background: rgba(255, 255, 255, 0.97) !important;
+  box-shadow: 0 2px 20px var(--shadow) !important;
+}
+
+/* Navbar links em light mode */
+html[data-theme="light"] .main_menu .navbar-nav li a {
+  color: var(--nav-text) !important;
+}
+
+html[data-theme="light"] .main_menu .menu_icon li a {
+  color: var(--nav-text) !important;
+}
+
+html[data-theme="light"] .main_menu.menu_fix .navbar-nav li a,
+html[data-theme="light"] .menu_fix .navbar-nav li a {
+  color: #222222 !important;
+}
+
+/* Submenu light */
+html[data-theme="light"] .main_menu .sub_menu {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 8px 30px var(--shadow) !important;
+}
+
+html[data-theme="light"] .main_menu .sub_menu > li > a {
+  color: #222222 !important;
+}
+
+/* Textos com valores hardcoded escuros no dark */
+html[data-theme="light"] .header-text .desc {
+  color: #f0f0f0 !important; /* mantém legível sobre hero com overlay */
+}
+
+html[data-theme="light"] .about-text .desc,
+html[data-theme="light"] .experience-text .desc,
+html[data-theme="light"] .single-blog .desc,
+html[data-theme="light"] .bar_group .sub-title,
+html[data-theme="light"] .testimonial-slider .single-testimonial .content p {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="light"] .single-blog .title a,
+html[data-theme="light"] .single-navigation .nav-link .text,
+html[data-theme="light"] .blog-details .head-title,
+html[data-theme="light"] .portfolio-details .head-title,
+html[data-theme="light"] .experience-text .title,
+html[data-theme="light"] .about-text .title,
+html[data-theme="light"] .bar_group .title,
+html[data-theme="light"] .b_label,
+html[data-theme="light"] .bar_label_min,
+html[data-theme="light"] .bar_label_max,
+html[data-theme="light"] .b_tooltip span,
+html[data-theme="light"] .testimonial-slider .single-testimonial .title,
+html[data-theme="light"] .icon-info h6,
+html[data-theme="light"] .icon-info h6 a {
+  color: var(--text-main) !important;
+}
+
+/* Cards em light mode */
+html[data-theme="light"] .single-service {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 4px 20px var(--shadow) !important;
+}
+
+html[data-theme="light"] .single-service .title {
+  color: var(--text-main) !important;
+}
+
+html[data-theme="light"] .single-service p {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="light"] .testimonial-slider .single-testimonial {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 4px 20px var(--shadow) !important;
+}
+
+html[data-theme="light"] .testimonial-slider .single-testimonial .position {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="light"] .single-blog,
+html[data-theme="light"] .blog-slider .single-blog {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 4px 20px var(--shadow) !important;
+}
+
+/* About image container */
+html[data-theme="light"] .about-image {
+  background-color: #f0f0f0 !important;
+  border-color: var(--border) !important;
+}
+
+/* Portfolio overlay em light: mantém o carmim mas mais opaco */
+html[data-theme="light"] .single-portfolio .portfolio-content:before {
+  opacity: 0.88 !important;
+}
+
+/* Inputs em light */
+html[data-theme="light"] .input-box {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+
+html[data-theme="light"] .contact-form ::-webkit-input-placeholder { color: #999 !important; }
+html[data-theme="light"] .contact-form ::-moz-placeholder          { color: #999 !important; }
+html[data-theme="light"] .contact-form :-ms-input-placeholder      { color: #999 !important; }
+
+/* Footer em light */
+html[data-theme="light"] .footer-area {
+  background-color: #1a1a1a !important; /* footer mantém escuro mesmo no light */
+  border-top-color: #2a2a2a !important;
+}
+
+html[data-theme="light"] .footer-widgets {
+  color: #cccccc !important;
+}
+
+html[data-theme="light"] .footer-widgets a {
+  color: #cccccc !important;
+}
+
+html[data-theme="light"] .footer-widgets .widget-title {
+  color: #ffffff !important;
+}
+
+/* Preloader light */
+html[data-theme="light"] .preloader {
+  background-color: var(--bg-deep) !important;
+}
+
+/* Blog meta light */
+html[data-theme="light"] .blog-meta {
+  background-color: var(--bg-card-2) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="light"] .blog-meta .single-meta .meta-value,
+html[data-theme="light"] .blog-meta .single-meta .meta-value a {
+  color: var(--text-main) !important;
+}
+
+/* Navigation entre projetos light */
+html[data-theme="light"] .single-navigation {
+  background-color: var(--bg-card) !important;
+  box-shadow: 0 4px 20px var(--shadow) !important;
+}
+
+/* Portfolio details info box */
+html[data-theme="light"] .portfolio-details .portflio-info {
+  background-color: var(--bg-card-2) !important;
+}
+
+/* Quote box light */
+html[data-theme="light"] .quote-box {
+  background-color: var(--bg-card-2) !important;
+}
+
+/* ScrollUp light */
+html[data-theme="light"] #scrollUp {
+  background-color: var(--bg-card) !important;
+  box-shadow: 0 2px 12px var(--shadow) !important;
+}
+
+/* Seções alternadas light */
+html[data-theme="light"] .services-area,
+html[data-theme="light"] .portfolio-area,
+html[data-theme="light"] .skills-area,
+html[data-theme="light"] .blog-area {
+  background-color: var(--bg-deep) !important;
+}
+
+html[data-theme="light"] .about-area,
+html[data-theme="light"] .experience-area,
+html[data-theme="light"] .feedback-area,
+html[data-theme="light"] .contact-area {
+  background-color: var(--bg-card) !important;
+}
+
+/* Blockquote light */
+html[data-theme="light"] blockquote {
+  background-color: var(--bg-card-2) !important;
+  color: var(--text-muted) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME TOGGLE BUTTON — Design do botão sol/lua na navbar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Container do botão na navbar */
+.theme-toggle-wrap {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+/* Botão pill */
+.theme-toggle-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 26px;
+  padding: 0;
+  border: 1.5px solid rgba(var(--accent-rgb), 0.6);
+  border-radius: 50px;
+  background: rgba(var(--accent-rgb), 0.08);
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background   0.3s ease,
+    box-shadow   0.3s ease !important;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.18);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.35);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Ícones (sol e lua) — visibilidade controlada por data-theme */
+.theme-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  transition:
+    opacity   0.3s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* DARK MODE ativo: mostra sol (convida ao light), esconde lua */
+.theme-icon--sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+.theme-icon--moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+/* LIGHT MODE ativo: mostra lua (convida ao dark), esconde sol */
+html[data-theme="light"] .theme-icon--sun  {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+html[data-theme="light"] .theme-icon--moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Indicador pill deslizante */
+.theme-toggle-btn::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+html[data-theme="light"] .theme-toggle-btn::after {
+  transform: translateX(18px);
+}
+
+/* Garantir ícones acima do pill */
+.theme-icon { z-index: 1; pointer-events: none; }

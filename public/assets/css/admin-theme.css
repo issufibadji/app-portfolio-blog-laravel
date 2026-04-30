@@ -1,0 +1,828 @@
+/*
+ * admin-theme.css — dev.finances visual identity for the admin panel
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Inclua DEPOIS de style.css e components.css no admin/layouts/inc/style.blade.php
+ *
+ * Dark  → :root  (padrão)
+ * Light → html[data-theme="light"]
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Backgrounds */
+  --adm-bg-primary    : #1a1a2e;
+  --adm-bg-card       : #2d2d2d;
+  --adm-bg-card-total : #2c4a8c;
+  --adm-bg-sidebar    : #1e1e1e;
+  --adm-bg-input      : #252535;
+  --adm-bg-row-alt    : #252525;
+  --adm-bg-th         : #2a2a2a;
+  --adm-bg-section-hd : #22223a;
+  --adm-bg-dropdown   : #252535;
+
+  /* Gradients */
+  --adm-grad-header   : linear-gradient(135deg, #6a0dad 0%, #c800c8 100%);
+  --adm-grad-btn      : linear-gradient(135deg, #7b2ff7 0%, #c800c8 100%);
+  --adm-grad-btn-hov  : linear-gradient(135deg, #9046ff 0%, #e040fb 100%);
+
+  /* Accent colours */
+  --adm-accent-purple : #7b2ff7;
+  --adm-accent-green  : #00e676;
+  --adm-accent-red    : #e53935;
+  --adm-accent-rgb-p  : 123, 47, 247;
+
+  /* Sidebar active state */
+  --adm-sidebar-act-bg  : rgba(123, 47, 247, 0.15);
+  --adm-sidebar-act-bdr : #7b2ff7;
+
+  /* Text */
+  --adm-text-primary  : #ffffff;
+  --adm-text-muted    : #aaaaaa;
+  --adm-text-nav      : #c8c8e8;
+
+  /* Border & shadow */
+  --adm-border        : #3a3a3a;
+  --adm-shadow        : rgba(0, 0, 0, 0.5);
+
+  /* Transition */
+  --adm-transition    : 0.3s ease;
+}
+
+/* ─── LIGHT THEME ─────────────────────────────────────────────────────────── */
+html[data-theme="light"] {
+  --adm-bg-primary    : #f0f0f8;
+  --adm-bg-card       : #ffffff;
+  --adm-bg-card-total : #3a5fad;
+  --adm-bg-sidebar    : #fafafa;
+  --adm-bg-input      : #f5f5ff;
+  --adm-bg-row-alt    : #f9f9f9;
+  --adm-bg-th         : #eeeeee;
+  --adm-bg-section-hd : #f0f0f8;
+  --adm-bg-dropdown   : #ffffff;
+
+  --adm-grad-header   : linear-gradient(135deg, #9b30ff 0%, #e040fb 100%);
+  --adm-grad-btn      : linear-gradient(135deg, #7b2ff7 0%, #c800c8 100%);
+  --adm-grad-btn-hov  : linear-gradient(135deg, #9046ff 0%, #e040fb 100%);
+
+  --adm-accent-green  : #00c853;
+  --adm-accent-red    : #c62828;
+
+  --adm-sidebar-act-bg  : rgba(123, 47, 247, 0.10);
+  --adm-sidebar-act-bdr : #7b2ff7;
+
+  --adm-text-primary  : #1a1a2e;
+  --adm-text-muted    : #555555;
+  --adm-text-nav      : #333366;
+
+  --adm-border        : #dddddd;
+  --adm-shadow        : rgba(0, 0, 0, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. GLOBAL TRANSITION
+   ═══════════════════════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  transition:
+    background-color var(--adm-transition),
+    color            var(--adm-transition),
+    border-color     var(--adm-transition),
+    box-shadow       var(--adm-transition) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. PAGE BACKGROUND
+   ═══════════════════════════════════════════════════════════════════════════ */
+body,
+.main-wrapper {
+  background-color: var(--adm-bg-primary) !important;
+}
+
+.main-content {
+  background-color: var(--adm-bg-primary) !important;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. TOPBAR / NAVBAR  (gradiente roxo → magenta, estilo dev.finances)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.navbar-bg {
+  background: var(--adm-grad-header) !important;
+  height: 60px !important;
+}
+
+.main-navbar {
+  background: var(--adm-grad-header) !important;
+  box-shadow: 0 2px 20px rgba(106, 13, 173, 0.4) !important;
+  border-bottom: none !important;
+}
+
+/* All text/icons in topbar → white */
+.main-navbar .nav-link,
+.main-navbar .nav-link-lg,
+.main-navbar .nav-link-user,
+.main-navbar .nav-link .d-sm-none,
+.main-navbar .nav-link .d-lg-inline-block {
+  color: #ffffff !important;
+}
+
+.main-navbar .nav-link:hover,
+.main-navbar .nav-link-user:hover {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Toggle button zone — espaço para o theme-toggle na topbar */
+.admin-theme-toggle-wrap {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. DROPDOWN MENUS (topbar user dropdown)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.main-navbar .dropdown-menu {
+  background-color: var(--adm-bg-dropdown) !important;
+  border: 1px solid var(--adm-border) !important;
+  box-shadow: 0 8px 30px var(--adm-shadow) !important;
+}
+
+.main-navbar .dropdown-item {
+  color: var(--adm-text-primary) !important;
+}
+
+.main-navbar .dropdown-item:hover {
+  background-color: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+}
+
+.main-navbar .dropdown-title {
+  color: var(--adm-text-muted) !important;
+  font-size: 12px !important;
+}
+
+.main-navbar .dropdown-divider {
+  border-color: var(--adm-border) !important;
+}
+
+.main-navbar .dropdown-item.text-danger {
+  color: var(--adm-accent-red) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. SIDEBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.main-sidebar,
+#sidebar-wrapper {
+  background-color: var(--adm-bg-sidebar) !important;
+  border-right: 1px solid var(--adm-border) !important;
+  box-shadow: 2px 0 12px var(--adm-shadow) !important;
+}
+
+/* Brand / logo */
+.sidebar-brand a,
+.sidebar-brand-sm a {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  background: var(--adm-grad-header) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Section headers (menu-header) */
+.sidebar-menu .menu-header {
+  color: var(--adm-text-muted) !important;
+  font-size: 10px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 16px 20px 6px !important;
+  font-weight: 600 !important;
+}
+
+/* All sidebar links */
+.sidebar-menu > li > a,
+.sidebar-menu li a.nav-link {
+  color: var(--adm-text-nav) !important;
+  padding: 10px 20px !important;
+  border-left: 3px solid transparent !important;
+  transition: all var(--adm-transition) !important;
+  border-radius: 0 !important;
+}
+
+.sidebar-menu > li > a:hover,
+.sidebar-menu li a.nav-link:hover {
+  background-color: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+  border-left-color: rgba(var(--adm-accent-rgb-p), 0.5) !important;
+}
+
+/* Active / current item */
+.sidebar-menu li.active > a,
+.sidebar-menu li.active > a.nav-link,
+.sidebar-menu > li.active > a {
+  background-color: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+  border-left-color: var(--adm-sidebar-act-bdr) !important;
+  font-weight: 600 !important;
+}
+
+/* Dropdown submenus in sidebar */
+.sidebar-menu .dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-left: 15px !important;
+}
+
+html[data-theme="light"] .sidebar-menu .dropdown-menu {
+  background-color: rgba(123, 47, 247, 0.05) !important;
+}
+
+.sidebar-menu .dropdown-menu li a {
+  color: var(--adm-text-muted) !important;
+  font-size: 13px !important;
+  padding: 7px 20px !important;
+  border-left: 2px solid transparent !important;
+}
+
+.sidebar-menu .dropdown-menu li a:hover,
+.sidebar-menu .dropdown-menu li.active a {
+  color: var(--adm-accent-purple) !important;
+  border-left-color: var(--adm-accent-purple) !important;
+  background-color: transparent !important;
+}
+
+/* Sidebar icons */
+.sidebar-menu li a i {
+  color: var(--adm-text-muted) !important;
+  width: 20px !important;
+  margin-right: 8px !important;
+}
+
+.sidebar-menu li.active > a i,
+.sidebar-menu li a:hover i {
+  color: var(--adm-accent-purple) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   7. SECTION HEADER (linha azul com "Dashboard" em cada página)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.section-header {
+  background-color: var(--adm-bg-section-hd) !important;
+  border-bottom: 1px solid var(--adm-border) !important;
+  padding: 20px 30px !important;
+}
+
+.section-header h1 {
+  color: var(--adm-text-primary) !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+}
+
+.section-header .breadcrumb {
+  background: transparent !important;
+  margin-bottom: 0 !important;
+}
+
+.section-header .breadcrumb-item,
+.section-header .breadcrumb-item a,
+.section-header .breadcrumb-item.active {
+  color: var(--adm-text-muted) !important;
+}
+
+.section-header .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--adm-text-muted) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. CARDS  (estilo dev.finances)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.card {
+  background-color: var(--adm-bg-card) !important;
+  border: 1px solid var(--adm-border) !important;
+  box-shadow: 0 4px 20px var(--adm-shadow) !important;
+  border-radius: 10px !important;
+}
+
+.card .card-header {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.card .card-header h4,
+.card .card-header h3,
+.card .card-header h2 {
+  color: var(--adm-text-muted) !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+}
+
+.card .card-body {
+  color: var(--adm-text-primary) !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+}
+
+/* Stat cards (card-statistic-1) */
+.card.card-statistic-1 {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 22px 20px !important;
+  gap: 16px !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.card.card-statistic-1::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(var(--adm-accent-rgb-p), 0.08);
+}
+
+.card.card-statistic-1 .card-icon {
+  flex-shrink: 0 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 22px !important;
+  color: #ffffff !important;
+}
+
+/* Icon background colours — mantendo identidade por categoria */
+.card.card-statistic-1 .card-icon.bg-primary {
+  background: linear-gradient(135deg, #6a0dad, #9b30ff) !important;
+  box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4) !important;
+}
+
+.card.card-statistic-1 .card-icon.bg-danger {
+  background: linear-gradient(135deg, #b71c1c, #e53935) !important;
+  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4) !important;
+}
+
+.card.card-statistic-1 .card-icon.bg-warning {
+  background: linear-gradient(135deg, #e65100, #ff9800) !important;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.35) !important;
+}
+
+.card.card-statistic-1 .card-icon.bg-success {
+  background: linear-gradient(135deg, #1b5e20, #00e676) !important;
+  box-shadow: 0 4px 15px rgba(0, 230, 118, 0.35) !important;
+}
+
+.card.card-statistic-1 .card-wrap {
+  flex: 1 !important;
+}
+
+.card.card-statistic-1 .card-wrap .card-header {
+  padding: 0 !important;
+  margin-bottom: 4px !important;
+  border: none !important;
+}
+
+.card.card-statistic-1 .card-wrap .card-body {
+  padding: 0 !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: var(--adm-text-primary) !important;
+  line-height: 1 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. TABLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.table {
+  color: var(--adm-text-primary) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.table thead th {
+  background-color: var(--adm-bg-th) !important;
+  color: var(--adm-text-muted) !important;
+  border-color: var(--adm-border) !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 700 !important;
+  padding: 14px 16px !important;
+}
+
+.table tbody td {
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+  padding: 12px 16px !important;
+  vertical-align: middle !important;
+}
+
+.table tbody tr {
+  background-color: var(--adm-bg-card) !important;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--adm-bg-row-alt) !important;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(var(--adm-accent-rgb-p), 0.08) !important;
+}
+
+/* Positive value (income) */
+.table .value-positive,
+.table td.text-success {
+  color: var(--adm-accent-green) !important;
+  font-weight: 700 !important;
+}
+
+/* Negative value (expense) */
+.table .value-negative,
+.table td.text-danger {
+  color: var(--adm-accent-red) !important;
+  font-weight: 700 !important;
+}
+
+/* DataTables specific */
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+  background-color: var(--adm-bg-input) !important;
+  color: var(--adm-text-primary) !important;
+  border: 1px solid var(--adm-border) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+}
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  color: var(--adm-text-muted) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: var(--adm-text-primary) !important;
+  background: var(--adm-bg-card) !important;
+  border: 1px solid var(--adm-border) !important;
+  border-radius: 6px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--adm-grad-btn) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   10. BUTTONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Primary — gradiente roxo magenta */
+.btn-primary,
+.btn-primary:focus {
+  background: var(--adm-grad-btn) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(var(--adm-accent-rgb-p), 0.4) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.btn-primary:hover {
+  background: var(--adm-grad-btn-hov) !important;
+  box-shadow: 0 6px 20px rgba(var(--adm-accent-rgb-p), 0.55) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Danger */
+.btn-danger,
+.btn-danger:focus {
+  background: var(--adm-accent-red) !important;
+  border-color: var(--adm-accent-red) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.btn-danger:hover {
+  background: #ff5252 !important;
+  border-color: #ff5252 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Success */
+.btn-success {
+  background: var(--adm-accent-green) !important;
+  border-color: var(--adm-accent-green) !important;
+  color: #000000 !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+}
+
+/* Secondary / outline */
+.btn-secondary {
+  background: transparent !important;
+  border: 1px solid var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+  border-radius: 8px !important;
+}
+
+.btn-secondary:hover {
+  background: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   11. FORM ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.form-control,
+.form-control:focus,
+select.form-control,
+textarea.form-control {
+  background-color: var(--adm-bg-input) !important;
+  border: 1px solid var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+  border-radius: 8px !important;
+}
+
+.form-control:focus {
+  border-color: var(--adm-accent-purple) !important;
+  box-shadow: 0 0 0 3px rgba(var(--adm-accent-rgb-p), 0.2) !important;
+}
+
+.form-control::placeholder {
+  color: var(--adm-text-muted) !important;
+}
+
+.form-group label,
+label {
+  color: var(--adm-text-primary) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+/* Select2 */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  background-color: var(--adm-bg-input) !important;
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: var(--adm-text-primary) !important;
+}
+
+.select2-dropdown {
+  background-color: var(--adm-bg-dropdown) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.select2-container--default .select2-results__option {
+  color: var(--adm-text-primary) !important;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+  background-color: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12. FOOTER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.main-footer {
+  background-color: var(--adm-bg-sidebar) !important;
+  border-top: 1px solid var(--adm-border) !important;
+  color: var(--adm-text-muted) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   13. MODAL
+   ═══════════════════════════════════════════════════════════════════════════ */
+.modal-content {
+  background-color: var(--adm-bg-card) !important;
+  border: 1px solid var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+}
+
+.modal-header {
+  border-bottom-color: var(--adm-border) !important;
+  background: var(--adm-grad-header) !important;
+  color: #ffffff !important;
+}
+
+.modal-header .modal-title {
+  color: #ffffff !important;
+}
+
+.modal-header .close {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+.modal-footer {
+  border-top-color: var(--adm-border) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   14. ALERTS / TOASTR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.alert {
+  border-radius: 10px !important;
+  border: none !important;
+}
+
+.alert-success {
+  background-color: rgba(0, 230, 118, 0.15) !important;
+  color: var(--adm-accent-green) !important;
+}
+
+.alert-danger {
+  background-color: rgba(229, 57, 53, 0.15) !important;
+  color: var(--adm-accent-red) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15. BADGES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.badge-primary {
+  background: var(--adm-grad-btn) !important;
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   16. THEME TOGGLE BUTTON (topbar, canto superior direito)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.admin-theme-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 26px;
+  padding: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.admin-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.admin-theme-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Sliding pill inside button */
+.admin-theme-btn::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+html[data-theme="light"] .admin-theme-btn::after {
+  transform: translateX(20px);
+}
+
+/* Icons */
+.admin-theme-icon {
+  position: absolute;
+  font-size: 13px;
+  line-height: 1;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Dark mode: show sun, hide moon */
+.admin-theme-icon--sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+.admin-theme-icon--moon { opacity: 0; transform: rotate(90deg) scale(0.4); }
+
+/* Light mode: show moon, hide sun */
+html[data-theme="light"] .admin-theme-icon--sun  { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+html[data-theme="light"] .admin-theme-icon--moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   17. MISCELLANEOUS FIXES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Input groups */
+.input-group-text {
+  background-color: var(--adm-bg-input) !important;
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-muted) !important;
+}
+
+/* Custom file input */
+.custom-file-label {
+  background-color: var(--adm-bg-input) !important;
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-muted) !important;
+}
+
+/* Summernote editor */
+.note-editor.note-frame {
+  border-color: var(--adm-border) !important;
+}
+
+.note-toolbar {
+  background-color: var(--adm-bg-th) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.note-btn {
+  background-color: var(--adm-bg-card) !important;
+  color: var(--adm-text-primary) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.note-editable {
+  background-color: var(--adm-bg-input) !important;
+  color: var(--adm-text-primary) !important;
+}
+
+/* Tags input */
+.bootstrap-tagsinput {
+  background-color: var(--adm-bg-input) !important;
+  border-color: var(--adm-border) !important;
+  color: var(--adm-text-primary) !important;
+}
+
+.bootstrap-tagsinput .tag {
+  background: var(--adm-grad-btn) !important;
+  color: #ffffff !important;
+}
+
+/* Selectric */
+.selectric {
+  background: var(--adm-bg-input) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.selectric .label {
+  color: var(--adm-text-primary) !important;
+}
+
+.selectric-items {
+  background: var(--adm-bg-dropdown) !important;
+  border-color: var(--adm-border) !important;
+}
+
+.selectric-items li {
+  color: var(--adm-text-primary) !important;
+}
+
+.selectric-items li:hover,
+.selectric-items li.selected {
+  background: var(--adm-sidebar-act-bg) !important;
+  color: #ffffff !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--adm-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--adm-accent-purple);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9b30ff;
+}

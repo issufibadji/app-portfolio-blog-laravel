@@ -3,7 +3,7 @@
     $seoSetting = \App\Models\SeoSetting::first();
 @endphp
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" id="html-root">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -12,6 +12,22 @@
   <title>Portfolio | @yield('title')</title>
   <!-- Include CSS Stylesheet -->
   @include('frontend.layouts.inc.style')
+
+  {{--
+    Anti-FOUC: aplica o tema ANTES do primeiro render.
+    Este inline script lê o localStorage e aplica data-theme="light"
+    instantaneamente se necessário — sem esperar o JS externo carregar.
+  --}}
+  <script>
+    (function() {
+      var stored = localStorage.getItem('portfolio-theme');
+      var preferLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = stored || (preferLight ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -57,6 +73,21 @@
             <a class="nav-link" href="#contact-page">Contact</a>
           </li>
         </ul>
+
+        {{-- Theme Toggle Button --}}
+        <div class="theme-toggle-wrap">
+          <button
+            id="theme-toggle-btn"
+            class="theme-toggle-btn"
+            aria-label="Mudar para tema claro"
+            aria-pressed="false"
+            title="Ativar tema claro"
+          >
+            <span class="theme-icon theme-icon--sun" aria-hidden="true">☀️</span>
+            <span class="theme-icon theme-icon--moon" aria-hidden="true">🌙</span>
+          </button>
+        </div>
+
       </div>
     </div>
   </nav>
