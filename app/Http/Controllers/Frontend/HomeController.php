@@ -26,21 +26,21 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $hero = Hero::first();
-        $typerTitles = TyperTitle::all();
-        $services = Service::latest()->take(6)->get();
-        $about = About::first();
-        $portfolioTitle = PortfolioSectionSetting::first();
+        $hero            = Hero::firstOrNew([]);
+        $typerTitles     = TyperTitle::all();
+        $services        = Service::latest()->take(6)->get();
+        $about           = About::firstOrNew([]);
+        $portfolioTitle  = PortfolioSectionSetting::firstOrNew([]);
         $portfolioCategories = Category::all();
-        $portfolioItems = PortfolioItem::all();
-        $skill = SkillSectionSetting::first();
-        $skillItems = SkillItem::all();
-        $experience = Experience::first();
-        $feedbacks = Feedback::all();
-        $feedbackTitle = FeedbackSectionSetting::first();
-        $blogs = Blog::latest()->take(5)->get();
-        $blogTitle = BlogSectionSetting::first();
-        $contactTitle = ContactSectionSetting::first();
+        $portfolioItems  = PortfolioItem::all();
+        $skill           = SkillSectionSetting::firstOrNew([]);
+        $skillItems      = SkillItem::all();
+        $experience      = Experience::firstOrNew([]);
+        $feedbacks       = Feedback::all();
+        $feedbackTitle   = FeedbackSectionSetting::firstOrNew([]);
+        $blogs           = Blog::latest()->take(5)->get();
+        $blogTitle       = BlogSectionSetting::firstOrNew([]);
+        $contactTitle    = ContactSectionSetting::firstOrNew([]);
         return view('frontend.pages.home' , compact('hero', 'typerTitles', 'services', 'about', 'portfolioTitle', 'portfolioCategories', 'portfolioItems', 'skill', 'skillItems', 'experience', 'feedbacks', 'feedbackTitle', 'blogs', 'blogTitle', 'contactTitle' ) );
     }
 

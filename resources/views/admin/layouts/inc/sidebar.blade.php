@@ -2,6 +2,23 @@
 <nav class="navbar navbar-expand-lg main-navbar">
   <div class="form-inline mr-auto"></div>
   <ul class="navbar-nav navbar-right">
+
+    {{-- Theme Toggle Button --}}
+    <li class="nav-item">
+      <div class="admin-theme-toggle-wrap nav-link" style="padding: 0 8px;">
+        <button
+          id="admin-theme-toggle-btn"
+          class="admin-theme-btn"
+          aria-label="Ativar tema claro"
+          aria-pressed="false"
+          title="Tema Claro"
+        >
+          <span class="admin-theme-icon admin-theme-icon--sun" aria-hidden="true">☀️</span>
+          <span class="admin-theme-icon admin-theme-icon--moon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </li>
+
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
         <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>

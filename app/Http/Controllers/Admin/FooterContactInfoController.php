@@ -13,7 +13,7 @@ class FooterContactInfoController extends Controller
      */
     public function index()
     {
-        $contact = FooterContactInfo::first();
+        $contact = FooterContactInfo::firstOrNew([]);
         return view('admin.footer-contact-info.index', compact('contact'));
     }
 

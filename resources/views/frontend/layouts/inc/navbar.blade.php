@@ -1,7 +1,11 @@
 <nav class="navbar navbar-expand-lg main_menu" id="main_menu_area">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="{{asset($generalSetting->logo)}}" alt="logo">
+      @if($generalSetting->logo && file_exists(public_path($generalSetting->logo)))
+        <img src="{{asset($generalSetting->logo)}}" alt="logo" class="navbar-logo-img">
+      @else
+        <span class="navbar-logo-text">{{ config('app.name', 'Portfolio') }}</span>
+      @endif
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

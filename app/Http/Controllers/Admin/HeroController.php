@@ -16,7 +16,7 @@ class HeroController extends Controller
      */
     public function index()
     {
-        $hero = Hero::first();
+        $hero = Hero::firstOrNew([]);
         return view('admin.hero.index', compact('hero'));
     }
 

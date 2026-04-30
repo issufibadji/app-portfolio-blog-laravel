@@ -13,7 +13,7 @@ class SeoSettingController extends Controller
      */
     public function index()
     {
-        $seo = SeoSetting::first();
+        $seo = SeoSetting::firstOrNew([]);
         return view('admin.setting.seo-setting.index', compact('seo'));
     }
 

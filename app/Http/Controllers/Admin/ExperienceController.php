@@ -13,7 +13,7 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $experience = Experience::first();
+        $experience = Experience::firstOrNew([]);
         return view('admin.experience.index', compact('experience'));
     }
 

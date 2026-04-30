@@ -16,6 +16,9 @@
 <link rel="stylesheet" href="{{asset('assets')}}/css/style.css">
 <link rel="stylesheet" href="{{asset('assets')}}/css/components.css">
 
+<!-- Dev.finances Admin Theme -->
+<link rel="stylesheet" href="{{asset('assets')}}/css/admin-theme.css">
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])

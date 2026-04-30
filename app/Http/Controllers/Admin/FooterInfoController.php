@@ -13,7 +13,7 @@ class FooterInfoController extends Controller
      */
     public function index()
     {
-        $footerInfo = FooterInfo::first();
+        $footerInfo = FooterInfo::firstOrNew([]);
         return view('admin.footer-info.index', compact('footerInfo'));
     }
 

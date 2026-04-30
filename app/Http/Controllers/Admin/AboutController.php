@@ -13,7 +13,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $about = About::first();
+        $about = About::firstOrNew([]);
         return view('admin.about.index', compact('about'));
     }
 

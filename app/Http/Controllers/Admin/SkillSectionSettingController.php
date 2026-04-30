@@ -13,7 +13,7 @@ class SkillSectionSettingController extends Controller
      */
     public function index()
     {
-        $skillSetting = SkillSectionSetting::first();
+        $skillSetting = SkillSectionSetting::firstOrNew([]);
         return view('admin.skill-setting.index', compact('skillSetting'));
     }
 

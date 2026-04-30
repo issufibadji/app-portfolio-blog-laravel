@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="admin-html-root">
 
 <head>
   <meta charset="UTF-8">
@@ -9,6 +9,18 @@
 
   <!-- include CSS Style -->
   @include('admin.layouts.inc.style')
+
+  {{-- Anti-FOUC: aplica data-theme ANTES do primeiro render --}}
+  <script>
+    (function () {
+      var stored = localStorage.getItem('admin-theme');
+      var preferLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = stored || (preferLight ? 'light' : 'dark');
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 
 <body>

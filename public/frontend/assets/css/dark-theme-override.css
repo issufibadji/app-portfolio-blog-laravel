@@ -86,6 +86,31 @@ a {
   background-color: var(--bg-deep) !important;
 }
 
+/* ─── Logo fallback text ─────────────────────────────────────────────────── */
+.navbar-logo-img {
+  max-height: 42px;
+  width: auto;
+}
+
+.navbar-logo-text {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html[data-theme="light"] .navbar-logo-text {
+  background: linear-gradient(135deg, #111111 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ─── Navegação ──────────────────────────────────────────────────────────── */
 /* Nav hover / active: laranja → carmim */
 .main_menu .navbar-nav li .active,
@@ -928,3 +953,423 @@ html[data-theme="light"] .theme-toggle-btn::after {
 
 /* Garantir ícones acima do pill */
 .theme-icon { z-index: 1; pointer-events: none; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REFINAMENTOS — Otimização visual (match referencia.jpg)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── R1. Gradiente vinho mais forte e tridimensional (DARK MODE APENAS) ── */
+/* Nota: light mode override está na seção "LIGHT MODE — correções completas" */
+html:not([data-theme="light"]),
+html:not([data-theme="light"]) body {
+  background-color: #080008 !important;
+  background-image:
+    radial-gradient(ellipse 90% 70% at 100% 100%, #2a0012 0%, transparent 52%),
+    radial-gradient(ellipse 55% 45% at 0%   10%,  #150008 0%, transparent 48%),
+    radial-gradient(ellipse 40% 30% at 50%  50%,  #100005 0%, transparent 60%),
+    linear-gradient(180deg, #080008 0%, #0b0005 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* ── R2. Hero overlay mais leve — foto mais visível ────────────────────── */
+.slide-inner:after,
+.site-header:after,
+.header-area:after {
+  background-color: #000 !important;
+  opacity: 0.52 !important;
+}
+
+/* Hero "olá, bem vindo" pequeno texto */
+.header-text .typer-title {
+  font-size: 16px !important;
+  letter-spacing: 1px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Nome principal — enorme e bold como na ref */
+.header-text .title {
+  font-size: clamp(2.8rem, 6vw, 5rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -1px !important;
+  line-height: 1.05 !important;
+}
+
+/* ── R3. Section titles — sublinha carmim + peso extra ─────────────────── */
+.section-title {
+  margin-bottom: 48px !important;
+}
+
+.section-title .title {
+  font-weight: 800 !important;
+  letter-spacing: -0.2px !important;
+  position: relative !important;
+  padding-bottom: 16px !important;
+}
+
+.section-title .title::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 44px !important;
+  height: 3px !important;
+  background: var(--accent) !important;
+  border-radius: 2px !important;
+}
+
+.section-title.text-left .title::after,
+.col-sm-12:not(.text-center) .section-title .title::after {
+  left: 0 !important;
+  transform: none !important;
+}
+
+/* ── R4. Service cards — gradiente sutil + hover com lift carmim ────────── */
+.single-service {
+  background: linear-gradient(145deg, #140008 0%, #0d0005 100%) !important;
+  border: 1px solid rgba(192, 20, 60, 0.12) !important;
+  border-left: 3px solid transparent !important;
+  border-radius: 10px !important;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.single-service:hover {
+  border-left-color: var(--accent) !important;
+  border-color: rgba(192, 20, 60, 0.28) !important;
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 35px rgba(192, 20, 60, 0.15) !important;
+}
+
+/* Ícone before title (traço carmim) — já existe via .title:before no template */
+.single-service .title:before {
+  background: var(--accent) !important;
+  height: 2px !important;
+  width: 24px !important;
+}
+
+/* ── R5. Skills bars — finas e elegantes (6px, como na ref) ─────────────── */
+.bar_group__bar.thick:before {
+  height: 6px !important;
+  border-radius: 3px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.bar_group__bar.thick,
+.bar_group .elastic {
+  height: 6px !important;
+  border-radius: 3px !important;
+  background: linear-gradient(90deg, #c0143c 0%, #e8195e 100%) !important;
+  box-shadow: 0 2px 12px rgba(192, 20, 60, 0.55) !important;
+}
+
+.bar_group {
+  margin-bottom: 20px !important;
+}
+
+.bar_group .title {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  color: #d0d0d0 !important;
+  margin-bottom: 10px !important;
+}
+
+/* ── R6. Contact inputs — bottom-border apenas (estilo minimalista) ─────── */
+.form-box {
+  position: relative !important;
+  border-bottom: 1px solid rgba(192, 20, 60, 0.22) !important;
+  margin-bottom: 24px !important;
+  transition: border-color 0.3s ease !important;
+}
+
+.form-box:focus-within {
+  border-bottom-color: var(--accent) !important;
+}
+
+.input-box {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 12px 40px 12px 0 !important;
+  color: #e8e8e8 !important;
+  font-size: 15px !important;
+  width: 100% !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.input-box:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+textarea.input-box {
+  border: none !important;
+  border-radius: 0 !important;
+  resize: none !important;
+}
+
+/* Ícone do lado direito do input */
+.form-box .icon {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: rgba(192, 20, 60, 0.5) !important;
+  pointer-events: none !important;
+}
+
+/* ── R7. Alternância de seções — dark mode: transparente para o gradient fluir */
+html:not([data-theme="light"]) .services-area,
+html:not([data-theme="light"]) .portfolio-area,
+html:not([data-theme="light"]) .skills-area,
+html:not([data-theme="light"]) .blog-area {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+html:not([data-theme="light"]) .about-area,
+html:not([data-theme="light"]) .experience-area,
+html:not([data-theme="light"]) .feedback-area,
+html:not([data-theme="light"]) .contact-area {
+  background-color: rgba(14, 0, 7, 0.55) !important;
+  background-image: none !important;
+}
+
+/* ── R8. Portfolio filter buttons — pill limpo e bem espaçado ───────────── */
+.filter-menu {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin-bottom: 36px !important;
+  list-style: none !important;
+}
+
+.filter-menu li {
+  border-radius: 50px !important;
+  padding: 8px 22px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+}
+
+/* ── R9. Scroll button — pill carmim sólido ─────────────────────────────── */
+#scrollUp {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: var(--accent) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(192, 20, 60, 0.5) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.25s ease !important;
+}
+
+#scrollUp:hover {
+  background: var(--accent-hover) !important;
+  box-shadow: 0 6px 24px rgba(192, 20, 60, 0.7) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── R10. Testimonial — card glass escuro ────────────────────────────────── */
+.testimonial-slider .single-testimonial {
+  background: linear-gradient(145deg, #150008 0%, #0e0005 100%) !important;
+  border: 1px solid rgba(192, 20, 60, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 32px !important;
+}
+
+/* ── R11. About — imagem com borda carmim sutil ─────────────────────────── */
+.about-image img {
+  border: 3px solid rgba(192, 20, 60, 0.2) !important;
+  border-radius: 8px !important;
+  transition: border-color 0.35s ease !important;
+}
+
+.about-image img:hover {
+  border-color: rgba(192, 20, 60, 0.5) !important;
+}
+
+/* ── R12. Blog cards — hover com lift ───────────────────────────────────── */
+.single-blog,
+.blog-slider .single-blog {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.single-blog:hover,
+.blog-slider .single-blog:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* ── R13. Portfolio item — hover overlay com escala suave ─────────────────── */
+.single-portfolio {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+.single-portfolio .portfolio-image img {
+  transition: transform 0.4s ease !important;
+}
+
+.single-portfolio:hover .portfolio-image img {
+  transform: scale(1.06) !important;
+}
+
+/* ── R14. Footer — separador superior carmim ─────────────────────────────── */
+.footer-area {
+  border-top: 2px solid rgba(192, 20, 60, 0.25) !important;
+}
+
+/* ── LIGHT MODE — correções completas para o tema claro ───────────────── */
+
+/* FIX CRÍTICO: resetar o gradiente escuro do elemento <html> em light mode */
+html[data-theme="light"] {
+  background-color: #f5f5f5 !important;
+  background-image: linear-gradient(150deg, #faf5f7 0%, #f5f2f4 40%, #f8f5f6 100%) !important;
+  background-attachment: fixed !important;
+}
+
+html[data-theme="light"] body {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Seções — fundo sólido claro (NÃO transparente) para não vazar o dark gradient */
+html[data-theme="light"] .services-area,
+html[data-theme="light"] .portfolio-area,
+html[data-theme="light"] .skills-area,
+html[data-theme="light"] .blog-area {
+  background-color: #f7f4f6 !important;
+  background: #f7f4f6 !important;
+}
+
+html[data-theme="light"] .about-area,
+html[data-theme="light"] .experience-area,
+html[data-theme="light"] .feedback-area,
+html[data-theme="light"] .contact-area {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* Service cards light */
+html[data-theme="light"] .single-service {
+  background: linear-gradient(145deg, #ffffff 0%, #fdf5f7 100%) !important;
+  border-color: rgba(192, 20, 60, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="light"] .single-service:hover {
+  box-shadow: 0 12px 35px rgba(192, 20, 60, 0.12) !important;
+}
+
+/* Inputs — bottom-border visível com texto escuro em light */
+html[data-theme="light"] .form-box {
+  border-bottom-color: rgba(192, 20, 60, 0.3) !important;
+}
+
+html[data-theme="light"] .input-box {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #111111 !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="light"] .input-box:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #111111 !important;
+}
+
+html[data-theme="light"] textarea.input-box {
+  border: none !important;
+  color: #111111 !important;
+}
+
+html[data-theme="light"] .contact-form ::-webkit-input-placeholder { color: #999999 !important; }
+html[data-theme="light"] .contact-form ::-moz-placeholder          { color: #999999 !important; }
+html[data-theme="light"] .contact-form :-ms-input-placeholder      { color: #999999 !important; }
+
+html[data-theme="light"] .form-box .icon {
+  color: rgba(192, 20, 60, 0.5) !important;
+}
+
+/* Scroll button light */
+html[data-theme="light"] #scrollUp {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(192, 20, 60, 0.4) !important;
+}
+
+/* Testimonial light */
+html[data-theme="light"] .testimonial-slider .single-testimonial {
+  background: #ffffff !important;
+  border-color: rgba(192, 20, 60, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07) !important;
+}
+
+html[data-theme="light"] .testimonial-slider .single-testimonial .content p,
+html[data-theme="light"] .testimonial-slider .single-testimonial .title,
+html[data-theme="light"] .testimonial-slider .single-testimonial .position {
+  color: var(--text-muted) !important;
+}
+
+/* About image light */
+html[data-theme="light"] .about-image img {
+  border-color: rgba(192, 20, 60, 0.18) !important;
+}
+
+/* Blog cards light */
+html[data-theme="light"] .single-blog,
+html[data-theme="light"] .blog-slider .single-blog {
+  background: #ffffff !important;
+  border-color: rgba(192, 20, 60, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Section titles light */
+html[data-theme="light"] .section-title .title {
+  color: #111111 !important;
+}
+
+html[data-theme="light"] .section-title .title::after {
+  background: var(--accent) !important;
+}
+
+html[data-theme="light"] .section-title .desc p {
+  color: #666666 !important;
+}
+
+/* Skills labels light */
+html[data-theme="light"] .bar_group .title {
+  color: #333333 !important;
+}
+
+/* Skill bars track light */
+html[data-theme="light"] .bar_group__bar.thick:before {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Navbar links light */
+html[data-theme="light"] .main_menu .navbar-nav li a {
+  color: #333333 !important;
+}
+
+html[data-theme="light"] .main_menu.menu_fix {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
+}

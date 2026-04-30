@@ -826,3 +826,340 @@ html[data-theme="light"] .admin-theme-icon--moon { opacity: 1; transform: rotate
 ::-webkit-scrollbar-thumb:hover {
   background: #9b30ff;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18. REFINAMENTOS — Correções visuais baseadas no screenshot
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 18a. Sidebar submenu — forçar fundo escuro com máxima especificidade ── */
+/* Stisla usa estilos próprios no dropdown da sidebar; sobrescrevemos aqui */
+body .main-sidebar #sidebar-wrapper .sidebar-menu li ul,
+body .main-sidebar #sidebar-wrapper .sidebar-menu li ul.dropdown-menu,
+body .main-sidebar .sidebar-menu .nav-item ul,
+body .main-sidebar .sidebar-menu li.dropdown > ul,
+.main-sidebar .sidebar-menu > li > ul {
+  background-color: #161625 !important;
+  border-left: 2px solid rgba(123, 47, 247, 0.25) !important;
+  border-radius: 0 !important;
+  margin-left: 12px !important;
+  padding: 4px 0 !important;
+  box-shadow: none !important;
+}
+
+body .main-sidebar .sidebar-menu li ul li,
+body .main-sidebar .sidebar-menu li ul.dropdown-menu li {
+  background: transparent !important;
+}
+
+body .main-sidebar .sidebar-menu li ul li a,
+body .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  color: #9898b8 !important;
+  padding: 8px 16px 8px 20px !important;
+  font-size: 13px !important;
+  border-left: 2px solid transparent !important;
+  display: block !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+body .main-sidebar .sidebar-menu li ul li a:hover,
+body .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover,
+body .main-sidebar .sidebar-menu li ul li.active a,
+body .main-sidebar .sidebar-menu li ul.dropdown-menu li.active a {
+  color: #c89eff !important;
+  border-left-color: var(--adm-accent-purple) !important;
+  background: rgba(123, 47, 247, 0.1) !important;
+  padding-left: 24px !important;
+}
+
+/* ── 18b. Sidebar — item wrapper visual polish ─────────────────────────── */
+.main-sidebar .sidebar-brand {
+  background: linear-gradient(135deg, rgba(106,13,173,0.6), rgba(200,0,200,0.4)) !important;
+  border-bottom: 1px solid rgba(123, 47, 247, 0.3) !important;
+  padding: 16px 20px !important;
+}
+
+.main-sidebar .sidebar-brand a {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Section labels na sidebar */
+.sidebar-menu .menu-header {
+  background: transparent !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  color: #6060a0 !important;
+  padding: 20px 20px 6px !important;
+}
+
+/* ── 18c. "Create New" e outros btn-success → gradiente roxo ───────────── */
+.btn-success,
+.btn-success:focus,
+.btn-success:active {
+  background: var(--adm-grad-btn) !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 15px rgba(123, 47, 247, 0.35) !important;
+}
+
+.btn-success:hover {
+  background: var(--adm-grad-btn-hov) !important;
+  box-shadow: 0 6px 20px rgba(123, 47, 247, 0.5) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── 18d. DataTables — paginação, inputs e info refinados ──────────────── */
+
+/* Wrapper de info ("Showing 1 to 3 of 3 entries") */
+.dataTables_wrapper {
+  color: var(--adm-text-muted) !important;
+}
+
+/* Select "Show X entries" */
+.dataTables_wrapper .dataTables_length select {
+  background-color: #252540 !important;
+  color: #ffffff !important;
+  border: 1px solid var(--adm-border) !important;
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  font-size: 13px !important;
+}
+
+/* Campo Search */
+.dataTables_wrapper .dataTables_filter input[type="search"] {
+  background-color: #252540 !important;
+  color: #ffffff !important;
+  border: 1px solid var(--adm-border) !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  outline: none !important;
+}
+
+.dataTables_wrapper .dataTables_filter input[type="search"]:focus {
+  border-color: var(--adm-accent-purple) !important;
+  box-shadow: 0 0 0 2px rgba(123, 47, 247, 0.2) !important;
+}
+
+/* Paginação */
+.dataTables_wrapper .dataTables_paginate {
+  margin-top: 12px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  background: #252540 !important;
+  color: #aaaacc !important;
+  border: 1px solid var(--adm-border) !important;
+  border-radius: 6px !important;
+  padding: 5px 12px !important;
+  margin: 0 2px !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background: var(--adm-grad-btn) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 12px rgba(123, 47, 247, 0.4) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+  background: #1a1a2e !important;
+  color: #555577 !important;
+  cursor: default !important;
+  box-shadow: none !important;
+}
+
+/* ── 18e. Section-body card — "ALL SERVICES" wrapper ──────────────────── */
+.section-body {
+  padding: 20px 30px !important;
+}
+
+.section-body .card {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.section-body .card > .card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 18px 24px !important;
+  background: linear-gradient(90deg, rgba(123,47,247,0.08), transparent) !important;
+  border-bottom: 1px solid var(--adm-border) !important;
+}
+
+.section-body .card > .card-header h4 {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: var(--adm-text-muted) !important;
+  margin: 0 !important;
+}
+
+/* ── 18f. Tabela — melhorar cabeçalho e linhas ─────────────────────────── */
+table.dataTable thead th,
+table.dataTable thead td {
+  background-color: #20203a !important;
+  color: #8888aa !important;
+  border-bottom: 2px solid var(--adm-accent-purple) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  padding: 14px 16px !important;
+}
+
+/* Ícone de sort */
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after {
+  color: rgba(123, 47, 247, 0.5) !important;
+}
+
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before {
+  color: var(--adm-accent-purple) !important;
+}
+
+table.dataTable tbody tr {
+  background-color: #232338 !important;
+}
+
+table.dataTable tbody tr:nth-child(even) {
+  background-color: #1e1e30 !important;
+}
+
+table.dataTable tbody tr:hover {
+  background-color: rgba(123, 47, 247, 0.1) !important;
+}
+
+table.dataTable tbody td {
+  color: #d0d0e8 !important;
+  border-color: #2a2a45 !important;
+  padding: 13px 16px !important;
+  font-size: 14px !important;
+  vertical-align: middle !important;
+}
+
+/* ── 18g. Botões de ação na tabela (edit / delete) ─────────────────────── */
+.btn-sm {
+  border-radius: 6px !important;
+  padding: 5px 10px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Edit btn (primary) */
+.btn.btn-primary.btn-sm {
+  background: linear-gradient(135deg, #7b2ff7, #9b50ff) !important;
+  box-shadow: 0 2px 8px rgba(123, 47, 247, 0.4) !important;
+}
+
+.btn.btn-primary.btn-sm:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(123, 47, 247, 0.6) !important;
+}
+
+/* Delete btn (danger) */
+.btn.btn-danger.btn-sm {
+  background: linear-gradient(135deg, #c62828, #e53935) !important;
+  box-shadow: 0 2px 8px rgba(229, 57, 53, 0.35) !important;
+}
+
+.btn.btn-danger.btn-sm:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(229, 57, 53, 0.55) !important;
+}
+
+/* ── 18h. Section-header refinamento ───────────────────────────────────── */
+.section-header {
+  background: linear-gradient(90deg, #1e1e38, #1a1a2e) !important;
+  border-bottom: 1px solid rgba(123, 47, 247, 0.3) !important;
+  border-left: 4px solid var(--adm-accent-purple) !important;
+  padding: 18px 30px !important;
+}
+
+.section-header h1 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* ── 18i. Light mode adjustments para os novos elementos ───────────────── */
+html[data-theme="light"] body .main-sidebar #sidebar-wrapper .sidebar-menu li ul,
+html[data-theme="light"] body .main-sidebar .sidebar-menu li ul.dropdown-menu {
+  background-color: #f0f0ff !important;
+  border-left-color: rgba(123, 47, 247, 0.3) !important;
+}
+
+html[data-theme="light"] body .main-sidebar .sidebar-menu li ul li a,
+html[data-theme="light"] body .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  color: #444466 !important;
+}
+
+html[data-theme="light"] body .main-sidebar .sidebar-menu li ul li a:hover,
+html[data-theme="light"] body .main-sidebar .sidebar-menu li ul.dropdown-menu li.active a {
+  color: var(--adm-accent-purple) !important;
+  background: rgba(123, 47, 247, 0.08) !important;
+}
+
+html[data-theme="light"] table.dataTable thead th {
+  background-color: #eeeefc !important;
+  color: #555577 !important;
+}
+
+html[data-theme="light"] table.dataTable tbody tr {
+  background-color: #ffffff !important;
+}
+
+html[data-theme="light"] table.dataTable tbody tr:nth-child(even) {
+  background-color: #f8f8ff !important;
+}
+
+html[data-theme="light"] table.dataTable tbody td {
+  color: #222244 !important;
+  border-color: #e8e8f0 !important;
+}
+
+html[data-theme="light"] .section-header {
+  background: linear-gradient(90deg, #f0f0ff, #f5f5ff) !important;
+  border-left-color: var(--adm-accent-purple) !important;
+}
+
+html[data-theme="light"] .section-body .card > .card-header {
+  background: linear-gradient(90deg, rgba(123,47,247,0.06), transparent) !important;
+}
+
+html[data-theme="light"] .dataTables_wrapper .dataTables_length select,
+html[data-theme="light"] .dataTables_wrapper .dataTables_filter input[type="search"] {
+  background-color: #f0f0ff !important;
+  color: #222244 !important;
+  border-color: #ccccee !important;
+}
+
+html[data-theme="light"] .dataTables_wrapper .dataTables_paginate .paginate_button {
+  background: #f0f0ff !important;
+  color: #444466 !important;
+  border-color: #ccccee !important;
+}

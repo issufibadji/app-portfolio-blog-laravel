@@ -1,11 +1,11 @@
-@extends('admin.layouts.layout')
+@extends('admin.layouts.master')
 @section('title', 'Edit Footer Useful Link')
 
 @section('content')
 <section class="section">
     <div class="section-header">
       <div class="section-header-back">
-        <a href="features-posts.html" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{ route('admin.footer-useful-links.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
       </div>
       <h1>Footer Useful Links</h1>
 

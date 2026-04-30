@@ -1,3 +1,6 @@
+<!-- Admin Theme Toggle (deve ser o primeiro script) -->
+<script src="{{ asset('assets/js/admin-theme-toggle.js') }}"></script>
+
 <!-- General JS Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
