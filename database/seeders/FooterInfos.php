@@ -14,7 +14,7 @@ class FooterInfos extends Seeder
     public function run(): void
     {
         DB::table('footer_infos')->insert([
-            'info' => 'Mi Primer Heroe',
+            'info' => 'Meu primeiro herói',
             'copy_right' => 'hero.jpg',
             'powered_by' => 'hero.jpg',
             'created_at' => now(),

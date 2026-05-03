@@ -14,7 +14,7 @@ class SkilSectionSettings extends Seeder
     public function run(): void
     {
         DB::table('skill_section_settings')->insert([
-            'title' => 'Mi Primer Heroe',
+            'title' => 'Meu primeiro herói',
             'sub_title' => 'hero.jpg',
             'created_at' => now(),
             'updated_at' => now(),

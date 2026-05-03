@@ -14,7 +14,7 @@ class Experience extends Seeder
     public function run(): void
     {
         DB::table('experiences')->insert([
-            'title' => 'Mi Primer Heroe',
+            'title' => 'Meu primeiro herói',
             'image' => 'hero.jpg',
             'phone' => '123456789',
             'email' => 'mail@example.com',

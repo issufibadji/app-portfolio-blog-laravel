@@ -14,7 +14,7 @@ class Blog extends Seeder
     public function run(): void
     {
         DB::table('blogs')->insert([
-            'title' => 'Mi Primer Heroe',
+            'title' => 'Meu primeiro herói',
             'image' => 'hero.jpg',
             'category' => 1,
             'description' => 'description',

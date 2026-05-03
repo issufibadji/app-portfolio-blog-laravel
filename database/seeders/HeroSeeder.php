@@ -13,7 +13,7 @@ class HeroSeeder extends Seeder
     public function run(): void
     {
         DB::table('heroes')->insert([
-            'title' => 'Mi Primer Heroe',
+            'title' => 'Meu primeiro herói',
             'image' => 'hero.jpg',
             'created_at' => now(),
             'updated_at' => now(),
